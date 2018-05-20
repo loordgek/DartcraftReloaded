@@ -35,12 +35,12 @@ import java.util.List;
 public class TileEntityInfuser extends TileEntity implements ITickable, ICapabilityProvider {
 
 
-    private ItemStackHandler handler;
+    public final ItemStackHandler handler;
     private int force;
     private DCREnergyStorage storage;
-    private NonNullList<ItemStack> infuserContents = NonNullList.<ItemStack>withSize(11, ItemStack.EMPTY);
-    public static List<Item> validToolList = new ArrayList<Item>();
-    public static List<Item> validModifierList = new ArrayList<Item>();
+    private NonNullList<ItemStack> infuserContents = NonNullList.withSize(11, ItemStack.EMPTY);
+    public static List<Item> validToolList = new ArrayList<>();
+    public static List<Item> validModifierList = new ArrayList<>();
 
 
     public TileEntityInfuser() {
@@ -138,7 +138,7 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
     }
 
     private boolean hasValidTool(){
-        if(handler.getStackInSlot(10) != null){
+        if(!handler.getStackInSlot(10).isEmpty()){
             for(int i = 0; i < References.numTools; i++){
                 if(handler.getStackInSlot(10).getItem() == validToolList.get(i)){
                     return true;
@@ -150,7 +150,7 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
 
     private boolean hasValidModifer(){
         for(int i = 2; i < 10; i++) {
-            if(handler.getStackInSlot(i) != null){
+            if(!handler.getStackInSlot(i).isEmpty()){
                 for(int j = 0; j < References.numModifiers - 1; j++){
                     if(handler.getStackInSlot(i).getItem() == validModifierList.get(j)){
                         return true;

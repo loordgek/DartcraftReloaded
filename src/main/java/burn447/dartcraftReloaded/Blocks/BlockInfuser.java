@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 /**
  * Created by BURN447 on 3/31/2018.
  */
-public class BlockInfuser extends BlockBase implements ITileEntityProvider {
+public class BlockInfuser extends BlockBase{
 
     public BlockInfuser(String name){
         super(Material.ROCK, name);
@@ -42,28 +42,21 @@ public class BlockInfuser extends BlockBase implements ITileEntityProvider {
         super.breakBlock(world, pos, state);
     }
 
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return super.hasTileEntity(state);
+    }
 
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileEntityInfuser();
     }
 
-
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(!worldIn.isRemote){
             playerIn.openGui(dartcraftReloaded.instance, GUIHandler.INFUSER, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
-        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
-    }
-
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase living, ItemStack stack) {
-        super.onBlockPlacedBy(world, pos, state, living, stack);
-    }
-
-    @Nullable
-    @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileEntityInfuser();
+        return true;
     }
 }
